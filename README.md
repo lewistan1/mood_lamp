@@ -3,7 +3,7 @@
 MoodLamp is a Wi-Fi–enabled interactive lighting system built using an **ESP32**, **NeoPixel LED rings**, **servo motors**, and an **Android application**.  
 It supports real-time colour control, brightness adjustment, rainbow animations, and physical touch interaction.
 
-This project combines **embedded systems**, **mobile app development**, and **interactive hardware design**, making it suitable for educational demos, FabLab showcases, and creative installations.
+This project combines **embedded systems**, **mobile app development**, and **interactive hardware design**, making it suitable for FabLab showcases, and creative installations.
 
 ---
 
@@ -121,16 +121,9 @@ This project combines **embedded systems**, **mobile app development**, and **in
 
 ---
 
-## 🌱 Future Improvements
-- JSON-based REST API
-- Preset save/load
-- Web UI fallback
-- Captive portal setup
-- LED gamma correction
 
----
+
 
 ## 👤 Author
-**Lionel Rafy**  
-Singapore Polytechnic – FabLab / School of EEE  
-Interactive & Educational Prototyping Project
+**Tan Kuan Seong Lewis**  
+Singapore Polytechnic – FabLab 
