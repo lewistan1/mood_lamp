@@ -39,7 +39,7 @@ This project combines **embedded systems**, **mobile app development**, and **in
 
 | Component | Quantity |
 |---------|---------|
-| ESP32 | 1 |
+| ESP32 supermini | 1 |
 | NeoPixel LED Ring (24 LEDs) | 3 |
 | Servo Motors | 2 |
 | Touch Input | 1 |
