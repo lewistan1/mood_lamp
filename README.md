@@ -107,7 +107,7 @@ This project combines **embedded systems**, **mobile app development**, and **in
 
 ---
 
-## 📸 Demo & Media
+## 📸 Pictures
 <img width="287" height="495" alt="image" src="https://github.com/user-attachments/assets/f8b531a7-e2dd-4d0d-b2df-6b6aa5e46edf" />
 <img width="460" height="487" alt="image" src="https://github.com/user-attachments/assets/e7abc099-241d-44cf-8a2f-1dfdfb4c9d6f" />
 
