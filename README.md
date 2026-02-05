@@ -1,4 +1,4 @@
-# 🌈 MoodLamp – Wi-Fi Controlled Interactive LED & Servo Lamp
+# 🌈 The Tower – Wi-Fi Controlled Interactive LED & Servo Lamp
 
 MoodLamp is a Wi-Fi–enabled interactive lighting system built using an **ESP32 supermini**, **NeoPixel LED rings**, **servo motors**, and an **Android application**.  
 It supports real-time colour control, brightness adjustment, rainbow animations, and physical touch interaction.
@@ -110,6 +110,7 @@ This project combines **embedded systems**, **mobile app development**, and **in
 ## 📸 Pictures
 <img width="287" height="495" alt="image" src="https://github.com/user-attachments/assets/f8b531a7-e2dd-4d0d-b2df-6b6aa5e46edf" />
 <img width="460" height="487" alt="image" src="https://github.com/user-attachments/assets/e7abc099-241d-44cf-8a2f-1dfdfb4c9d6f" />
+<img width="650" height="648" alt="Screenshot 2025-11-17 145646" src="https://github.com/user-attachments/assets/6eb6d9c4-041b-47aa-9cb0-29ae564d3dc0" />
 
 
 ---
