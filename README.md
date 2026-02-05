@@ -1,130 +1,184 @@
-# 🌈 The Tower – Wi-Fi Controlled Interactive LED & Servo Lamp
+# ⚖️ PivotLab – Interactive Balance & OLED Animation System
 
-The tower is a Wi-Fi–enabled interactive lighting system built using an **ESP32 supermini**, **NeoPixel LED rings**, **servo motors**, and an **Android application**.  
-It supports real-time colour control, brightness adjustment, rainbow animations, and physical touch interaction.
+PivotLab is an **ESP32-based educational mechatronics system** designed for hands-on learning in **balance, force, and control concepts**.  
+It combines a **servo motor**, **AS5600 magnetic angle sensor**, **rotary encoder**, and **OLED display**, along with a **Python-based bitmap generator** for OLED startup animations.
 
-This project combines **embedded systems**, **mobile app development**, and **interactive hardware design**, making it suitable for FabLab showcases, and creative installations.
-
----
-
-## ✨ Features
-
-### 📱 Android App
-- Manual **ESP32 IP address input**
-- **ON / OFF / Rainbow** controls
-- **Brightness slider** (0–255)
-- **Master color picker** (controls all lights)
-- **Individual color control** for each light
-- Adaptive button text colour for readability
-- Live **HTTP request & response logging**
-
-### 🔌 ESP32 Firmware
-- Wi-Fi–based HTTP server (port 80)
-- Controls:
-  - **3 NeoPixel LED rings** (24 LEDs each)
-  - **2 servo motors**
-  - **Touch input** for standalone control
-- Operating modes:
-  - **STATIC** – solid colour with servo angles mapped from colour brightness
-  - **RAINBOW** – smooth colour fade with organic servo motion
-- Touch behaviour:
-  - Short press → cycle colours / modes
-  - Long press (≥2s) → turn off LEDs and relax servos
-- Smooth servo motion with easing and randomised movement
-
+This project is suitable for **FabLab kits**, **engineering education**, and **interactive demonstrations**.
 
 ---
 
-## 🔌 Hardware Components
+## ✨ Key Features
+
+### 🎮 ESP32 Interactive System
+- Multiple operating modes:
+  - **Normal Mode** – balance challenges with a fixed number of moves
+  - **Infinite Mode** – endless gameplay with adjustable difficulty
+  - **Education Mode** – balance-first, then answer conceptual questions
+  - **Auto Balance Mode** – closed-loop automatic balancing
+  - **Settings Menu** – configure stored angles and system behaviour
+- Smooth servo motion with:
+  - Backlash compensation
+  - Direction-change ramping
+  - Assist + hold control logic
+- Dual AS5600 usage:
+  - ADC path for fast gating and assist logic
+  - I2C path for precise holding
+- Persistent storage using ESP32 **Preferences (NVS)**
+- OLED UI with menus, prompts, and real-time feedback
+- Rotary encoder navigation with push-button confirmation
+
+---
+
+## 🎓 Education Mode Capabilities
+
+Education mode dynamically generates questions after the lever is balanced:
+
+- Force calculation
+- Moment calculation
+- Balance state interpretation
+- Direction and motion understanding
+- True / False conceptual checks
+
+Supported answer types:
+- Numeric values
+- Word-based descriptions
+- True / False
+
+---
+
+## 🧠 Control & Software Concepts
+
+- Closed-loop feedback control
+- Hysteresis and deadband handling
+- Sensor filtering (EMA + trimmed mean)
+- Servo backlash take-up logic
+- Human–machine interface (HMI) design
+- Non-blocking UI and control loops
+- Persistent configuration storage
+
+---
+
+## 🔌 Hardware Overview
 
 | Component | Quantity |
-|---------|---------|
-| ESP32 supermini | 1 |
-| NeoPixel LED Ring (24 LEDs) | 3 |
-| Servo Motors | 2 |
-| Touch Input | 1 |
+|---------|----------|
+| ESP32 | 1 |
+| Servo Motor | 1 |
+| AS5600 Magnetic Encoder | 1 |
+| OLED Display (SSD1306 128×64) | 1 |
+| Rotary Encoder (with button) | 1 |
 | External Power Supply | 1 |
 
-### Pin Configuration
+---
+
+## 📍 Pin Configuration
 
 | Function | ESP32 Pin |
-|-------|---------|
-| NeoPixel Ring 1 | GPIO 5 |
-| NeoPixel Ring 2 | GPIO 6 |
-| NeoPixel Ring 3 | GPIO 7 |
-| Servo 1 | GPIO 1 |
-| Servo 2 | GPIO 2 |
-| Touch Input | GPIO 0 |
+|--------|----------|
+| Servo PWM | GPIO 4 |
+| Encoder CLK | GPIO 25 |
+| Encoder DT | GPIO 33 |
+| Encoder Button | GPIO 32 |
+| AS5600 Analog OUT | GPIO 34 |
+| OLED SDA | GPIO 21 |
+| OLED SCL | GPIO 22 |
 
 ---
 
-## 🌐 HTTP API (ESP32)
+## 🖥 User Interface
 
-| Endpoint | Description |
-|-------|------------|
-| `/on` | Turn on static mode |
-| `/off` | Turn off all lights |
-| `/rainbow?state=on` | Enable rainbow mode |
-| `/brightness?value=0–255` | Set brightness |
-| `/color1?r=&g=&b=` | Set Light 1 colour |
-| `/color2?r=&g=&b=` | Set Light 2 colour |
-| `/color3?r=&g=&b=` | Set Light 3 colour |
+- Rotate encoder to navigate menus
+- Press encoder to confirm selections
+- OLED displays:
+  - Mode selection
+  - Real-time angle feedback
+  - Game statistics
+  - Education questions and answers
+  - Auto-balance state information
 
 ---
 
-## 🖐 Touch Controls
+## 🖼 OLED Frame Bitmap Generator (Python)
 
-| Interaction | Action |
-|-----------|-------|
-| Short press | Cycle colour / mode |
-| Long press (≥2s) | Turn off LEDs and stop servos |
+This project includes a **Python utility** that converts image files into **Arduino-compatible OLED bitmap headers** for animations and startup screens.
+
+### Features
+- Supports `.png`, `.jpg`, `.bmp`
+- Automatically resizes to **128×64**
+- Correct OLED bit mapping (1 = white, 0 = black)
+- Generates:
+  - One `.h` file per frame
+  - A combined `frames.h` file with:
+    - `frames[]` pointer array in `PROGMEM`
+    - `FRAME_COUNT` definition
+
+---
+
+## 📂 Folder Structure
+
+project/
+├── frames/ # Input images
+├── output_h/ # Generated Arduino headers
+│ ├── frame_01.h
+│ ├── frame_02.h
+│ └── frames.h
+├── convert.py # Python bitmap conversion script
+└── pivotlab.ino # ESP32 firmware
+
+
+> Frame playback order follows filename sorting  
+> Use zero-padded names like `frame_01.png`
 
 ---
 
 ## 🛠 Software Stack
 
-- **ESP32 Firmware**: MicroPython
-- **Android App**: Java (Android Studio)
-- **Networking**: HTTP GET (OkHttp)
-- **LED Control**: NeoPixel
-- **Servo Control**: PWM (50 Hz)
-
----
-
-## 🚀 Setup Instructions
-
 ### ESP32
-1. Flash MicroPython onto ESP32
-2. Upload the firmware script
-3. Update Wi-Fi SSID and password if needed
-4. Power on ESP32 and note its IP address
+- Arduino framework
+- Adafruit SSD1306 & GFX
+- ESP32Encoder
+- ESP32Servo
+- Preferences (NVS)
 
-### Android App
-1. Open project in Android Studio
-2. Build and install the APK
-3. Enter the ESP32 IP address
-4. Start controlling the MoodLamp 🎨
+### PC / Tooling
+- Python 3
+- Pillow (PIL)
 
----
+Install Python dependency:
+```bash
+pip install pillow
+🚀 Setup Instructions
+Install required Arduino libraries
 
-## 📸 Pictures
-<img width="287" height="495" alt="image" src="https://github.com/user-attachments/assets/f8b531a7-e2dd-4d0d-b2df-6b6aa5e46edf" />
-<img width="460" height="487" alt="image" src="https://github.com/user-attachments/assets/e7abc099-241d-44cf-8a2f-1dfdfb4c9d6f" />
-<img width="650" height="648" alt="Screenshot 2025-11-17 145646" src="https://github.com/user-attachments/assets/6eb6d9c4-041b-47aa-9cb0-29ae564d3dc0" />
+Flash the ESP32 firmware
 
+Connect hardware according to the pin configuration
 
----
+(Optional) Generate OLED frames using the Python script
 
-## 🧪 Known Limitations
-- Lightweight HTTP parsing (no full header processing)
-- Single client connection at a time
-- No persistent state storage after reboot
+Power on the device and navigate using the rotary encoder
 
----
+🧪 Known Limitations
+Single servo supported
 
+Fixed OLED resolution (128×64)
 
+Rule-based education questions
 
+Bitmap generator uses hard monochrome threshold (no dithering)
 
-## 👤 Author
-**Tan Kuan Seong Lewis**  
-Singapore Polytechnic – FabLab 
+🌱 Possible Improvements
+Multi-servo support
+
+Wireless monitoring or data logging
+
+Adaptive education difficulty
+
+OLED dithering support in Python tool
+
+Modular .h / .cpp refactoring
+
+👤 Author
+Lewis Tan
+Singapore Polytechnic – EEE / FabLab
+Educational Mechatronics & Interactive Systems Project
