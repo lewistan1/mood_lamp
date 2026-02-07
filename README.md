@@ -43,7 +43,6 @@ This project combines **embedded systems**, **mobile app development**, and **in
 | NeoPixel LED Ring (24 LEDs) | 3 |
 | Servo Motors | 2 |
 | Touch Input | 1 |
-| External Power Supply | 1 |
 
 ### Pin Configuration
 
